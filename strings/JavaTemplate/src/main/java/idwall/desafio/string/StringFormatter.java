@@ -17,5 +17,21 @@ public abstract class StringFormatter {
      * @param text
      * @return
      */
+    
+    public abstract String formatHub(String text,boolean justify);
+    
     public abstract String format(String text);
+
+    public abstract String justify(String text);
+
+    public abstract String justifyLine(String text);
+
+    public int getLimit() {
+        return limit;
+    }
+
+    public void setLimit(int limit) {
+        this.limit = limit;
+    }
+
 }
