@@ -25,7 +25,7 @@ public class IdwallFormatter extends StringFormatter {
         if(justify)
             return justify(text);
         else
-            return justify(text);
+            return format(text);
     }
     
     @Override
