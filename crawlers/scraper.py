@@ -21,6 +21,7 @@ def get_content(page):
     soup = BeautifulSoup(page.content, 'html.parser')
     attrs = {'class': 'thing'}
     message = ""
+    messageToSend = ""
     for thread in soup.find_all('div', attrs=attrs):
         try:
             trending = BMP(thread.find("div", attrs={"class": "score likes"}).text)
@@ -31,27 +32,16 @@ def get_content(page):
             if(int(trending) > 5000):
                 message = "Upvote number -> "+trending+"\n Title -> "+BMP(thread.find('p', class_="title").text)+"\nThread link -> "+BMP(thread.find("a").attrs['href'])+"\nThread comments link -> "+BMP(thread.find('a', class_='comments').attrs['href'])+"\n"
                 message = re.sub("\_","",message)
-                print(message)
+                print(telegram_bot_sendtext(message))
         except AttributeError:
             print("Failed!")
-    print(telegram_bot_sendtext(message))
-
-
+    
 def telegram_bot_sendtext(bot_message):
-    print("MENSAGEM QUE CHEGA NO BOT \n"+bot_message)
     bot_token = '854673095:AAEqhIFMuql215inNB2ATVjRD9O2h8-fQIY'
-    bot_chatID = 'yautja\_bot'
+    bot_chatID = '@testepiercarlo'
     send_text = 'https://api.telegram.org/bot' + bot_token + '/sendMessage?chat_id=' + bot_chatID + '&parse_mode=Markdown&text=' + bot_message
-    print(send_text)
     response = requests.get(send_text)
     return response.json()
-
-
-def report():
-    my_balance = 10   ## Replace this number with an API call to fetch your account balance
-    my_message = "Current balance is: {}".format(my_balance)   ## Customize your message
-    telegram_bot_sendtext(my_message)
-
             
 if __name__ == "__main__":
     if len(sys.argv) <= 1:
